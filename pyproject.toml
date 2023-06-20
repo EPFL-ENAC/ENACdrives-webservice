@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "ENACdrives"
-version = "1.2.6"
-description = ""
+name = "ENACdrives-webservice"
+version = "0.1.0"
+description = "ENACdrives webservice"
 authors = ["Samuel Bancal <Samuel.Bancal@epfl.ch>"]
 
 [tool.poetry.dependencies]
