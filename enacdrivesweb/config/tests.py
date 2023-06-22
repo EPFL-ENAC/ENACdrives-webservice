@@ -1,14 +1,16 @@
 """
 
+TODO: fix old fashion setup
+
 Setup db with :
 ~~~
 . venv3/bin/activate
-python enacdrives/manage.py migrate
+python enacdrivesweb/manage.py migrate
 ~~~
 
 Run these tests with :
 ~~~
-python enacdrives/manage.py test enacdrives
+python enacdrivesweb/manage.py test enacdrivesweb
 ~~~
 
 """

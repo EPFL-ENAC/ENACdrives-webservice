@@ -1,5 +1,7 @@
 # Settings specific to enacit1pc4.epfl.ch
 
+# TODO fix this old fashion way to set the settings
+
 import os
 
 ADMINS = (("Samuel Bancal", "Samuel.Bancal@epfl.ch"),)

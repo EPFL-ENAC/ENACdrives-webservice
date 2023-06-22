@@ -6,6 +6,9 @@ authors = ["Samuel Bancal <Samuel.Bancal@epfl.ch>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+django = "^4.2.2"
+ldap3 = "^2.9.1"
+mysqlclient = "^2.1.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^5.0.4"

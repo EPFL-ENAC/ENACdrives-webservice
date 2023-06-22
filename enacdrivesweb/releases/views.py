@@ -12,7 +12,7 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context_processors import csrf
 from django.http import HttpResponse, Http404, HttpResponseForbidden
 
-from enacdrives import app_settings
+from enacdrivesweb import app_settings
 from releases import models as mo
 from releases import utility as ut
 

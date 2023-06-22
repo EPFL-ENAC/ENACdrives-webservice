@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-from enacdrives.app_settings import *
+from enacdrivesweb.app_settings import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -56,7 +56,7 @@ MIDDLEWARE_CLASSES = (
 
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.RemoteUserBackend",)
 
-ROOT_URLCONF = "enacdrives.urls"
+ROOT_URLCONF = "enacdrivesweb.urls"
 
 TEMPLATES = [
     {
@@ -74,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "enacdrives.wsgi.application"
+WSGI_APPLICATION = "enacdrivesweb.wsgi.application"
 
 
 # Database

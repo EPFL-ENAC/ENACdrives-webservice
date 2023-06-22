@@ -20,13 +20,13 @@ import subprocess
 # from smb import smb_structs
 from django.core.wsgi import get_wsgi_application
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "enacdrives.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "enacdrivesweb.settings"
 my_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(my_path)
 application = get_wsgi_application()
 
 
-# my_path = '/home/sbancal/Projects/ENACdrives/web_app/enacdrives'  # TODO REMOVE THIS
+# my_path = '/home/sbancal/Projects/ENACdrives/web_app/enacdrivesweb'  # TODO REMOVE THIS
 
 # CRED_FILE = os.path.join(my_path, 'enacmoni.cred')
 # with open(CRED_FILE, 'rb') as f:

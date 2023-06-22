@@ -1,7 +1,7 @@
 import os
 import sys
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "enacdrives.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "enacdrivesweb.settings"
 
 my_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(my_path)

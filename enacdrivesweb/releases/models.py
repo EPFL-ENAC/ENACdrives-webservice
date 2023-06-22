@@ -13,7 +13,11 @@ class Arch(models.Model):
     os = models.CharField(max_length=1, choices=OS_CHOICES, default=OS_WIN)
 
     current_installer = models.ForeignKey(
-        "Installer", related_name="+", blank=True, null=True
+        "Installer",
+        related_name="+",
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):
@@ -31,7 +35,10 @@ class Installer(models.Model):
     upload_date = models.DateTimeField()
     release_number = models.CharField(max_length=256)
 
-    arch = models.ForeignKey("Arch")
+    arch = models.ForeignKey(
+        "Arch",
+        on_delete=models.CASCADE,
+    )
 
     file_name = models.CharField(max_length=256)
     storage_name = models.CharField(max_length=256)
