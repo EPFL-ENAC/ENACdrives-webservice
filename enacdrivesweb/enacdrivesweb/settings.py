@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     "releases",
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -52,6 +52,7 @@ MIDDLEWARE_CLASSES = (
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
 )
 
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.RemoteUserBackend",)
@@ -76,6 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "enacdrivesweb.wsgi.application"
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases

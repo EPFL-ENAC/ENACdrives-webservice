@@ -6,9 +6,9 @@ import datetime
 
 
 from django.template import RequestContext
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.defaulttags import register
-from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context_processors import csrf
 from django.http import HttpResponse, Http404, HttpResponseForbidden
 
@@ -51,7 +51,7 @@ def http_admin(request):
 
     params.update(csrf(request))
     debug_logger.debug("params: {}".format(params))
-    return render_to_response("admin.html", params, RequestContext(request))
+    return render(request, "admin.html", params, RequestContext(request))
 
 
 def do_upload(request):
