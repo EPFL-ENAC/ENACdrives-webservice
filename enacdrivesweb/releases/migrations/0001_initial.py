@@ -48,13 +48,13 @@ class Migration(migrations.Migration):
                 ("release_number", models.CharField(max_length=256)),
                 ("file_name", models.CharField(max_length=256)),
                 ("storage_name", models.CharField(max_length=256)),
-                ("arch", models.ForeignKey(to="releases.Arch")),
+                ("arch", models.ForeignKey(on_delete=models.CASCADE, to="releases.Arch")),
             ],
         ),
         migrations.AddField(
             model_name="arch",
             name="current_installer",
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE, 
                 related_name="+", null=True, blank=True, to="releases.Installer"
             ),
         ),

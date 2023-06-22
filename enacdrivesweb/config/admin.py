@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import User, EpflUnit, LdapGroup, Config
 
 
+@admin.register(Config)
 class ConfigAdmin(admin.ModelAdmin):
     fieldsets = (
         ("What", {"fields": (("name", "enabled"), "rank", "data")}),
@@ -32,6 +33,9 @@ class ConfigAdmin(admin.ModelAdmin):
     list_display_links = ("name", "get_data")
     ordering = ("rank",)
 
+    @admin.display(
+        description="Users"
+    )
     def get_users(self, obj):
         if obj.category == Config.CAT_USER:
             html = "<span>{}</span>"
@@ -39,9 +43,10 @@ class ConfigAdmin(admin.ModelAdmin):
             html = "<span class='field-off red'>{}</span>"
         return html.format(", ".join([u.name for u in obj.users.all()]))
 
-    get_users.short_description = "Users"
-    get_users.allow_tags = True
 
+    @admin.display(
+        description="EPFL Units"
+    )
     def get_epfl_units(self, obj):
         if obj.category == Config.CAT_EPFL_UNIT:
             html = "<span>{}</span>"
@@ -49,9 +54,10 @@ class ConfigAdmin(admin.ModelAdmin):
             html = "<span class='field-off red'>{}</span>"
         return html.format(", ".join([g.name for g in obj.epfl_units.all()]))
 
-    get_epfl_units.short_description = "EPFL Units"
-    get_epfl_units.allow_tags = True
 
+    @admin.display(
+        description="Ldap Groups"
+    )
     def get_ldap_groups(self, obj):
         if obj.category == Config.CAT_LDAP_GROUP:
             html = "<span>{}</span>"
@@ -59,15 +65,17 @@ class ConfigAdmin(admin.ModelAdmin):
             html = "<span class='field-off red'>{}</span>"
         return html.format(", ".join([g.name for g in obj.ldap_groups.all()]))
 
-    get_ldap_groups.short_description = "Ldap Groups"
-    get_ldap_groups.allow_tags = True
 
+    @admin.display(
+        description="Data"
+    )
     def get_data(self, obj):
         return obj.data.replace("\n", "<br/>")
 
-    get_data.short_description = "Data"
-    get_data.allow_tags = True
 
+    @admin.display(
+        description="Client Filter"
+    )
     def get_client_filter(self, obj):
         the_list = []
         html = "<span>{}</span>"
@@ -86,8 +94,6 @@ class ConfigAdmin(admin.ModelAdmin):
             the_list.append("None")
         return html.format(" and <br>".join(the_list))
 
-    get_client_filter.short_description = "Client Filter"
-    get_client_filter.allow_tags = True
 
     def short(self, string, max_length):
         if len(string) > max_length:
@@ -103,4 +109,3 @@ class ConfigAdmin(admin.ModelAdmin):
 admin.site.register(User)
 admin.site.register(EpflUnit)
 admin.site.register(LdapGroup)
-admin.site.register(Config, ConfigAdmin)

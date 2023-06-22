@@ -1,6 +1,6 @@
 import re
 import logging
-from django.utils.encoding import smart_text
+from django.utils.encoding import smart_str
 
 
 def validate_input(data_source, data_type):
@@ -9,7 +9,7 @@ def validate_input(data_source, data_type):
     """
     if data_type == "username":
         data = data_source(data_type, "")
-        data = smart_text(data, errors="ignore")
+        data = smart_str(data, errors="ignore")
         data = data.lower()
         all_str = re.findall(r"\w", data)
         # all_str = re.findall(r"[\w\.@]", data) # needed for username=a.s.bancal@bluewin.ch (test)
@@ -17,7 +17,7 @@ def validate_input(data_source, data_type):
         return data
     elif data_type in ("version", "os", "os_version"):
         data = data_source(data_type, "")
-        data = smart_text(data, errors="ignore")
+        data = smart_str(data, errors="ignore")
         return data
     raise Exception("Unknown data_type '{0}'".format(data_type))
 

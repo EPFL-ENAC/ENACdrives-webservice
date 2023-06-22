@@ -113,6 +113,21 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-upgrade"
+version = "1.14.0"
+description = "Automatically upgrade your Django project code."
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_upgrade-1.14.0-py3-none-any.whl", hash = "sha256:d5a37e216d0a6e276ee98f6ecb3567ce1226e5ba0721a86e2312ba5434495b70"},
+    {file = "django_upgrade-1.14.0.tar.gz", hash = "sha256:4964fb7066b879c6e2fc0f9b63d1b937c1237c239499882471826a69f46ed2bb"},
+]
+
+[package.dependencies]
+tokenize-rt = ">=4.1.0"
+
+[[package]]
 name = "flake8"
 version = "5.0.4"
 description = "the modular source code checker: pep8 pyflakes and co"
@@ -267,6 +282,18 @@ doc = ["sphinx"]
 test = ["pytest", "pytest-cov"]
 
 [[package]]
+name = "tokenize-rt"
+version = "5.1.0"
+description = "A wrapper around the stdlib `tokenize` which roundtrips."
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "tokenize_rt-5.1.0-py2.py3-none-any.whl", hash = "sha256:9b7bb843e77dd6ed0be5564bfaaba200083911e0497841cd3e9235a6a9794d74"},
+    {file = "tokenize_rt-5.1.0.tar.gz", hash = "sha256:08f0c2daa94c4052e53c2fcaa8e32585e6ae9bdfc800974092d031401694e002"},
+]
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -305,4 +332,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "cd1ef424a3d24b3d3d6663d0eb6018cbbe144d9a50c2d5296f9b8d219210c2c5"
+content-hash = "4b19c62c5b51d937dde31b01ff01fd55e27476c73fb4d2b7cba4138b77b24c0d"

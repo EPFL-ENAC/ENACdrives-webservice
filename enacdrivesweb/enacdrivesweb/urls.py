@@ -1,10 +1,10 @@
-from django.conf.urls import include, url
+from django.urls import include, path
 from django.contrib import admin
 
 
 urlpatterns = [
-    url(r"^$", "releases.views.http_home"),
-    url(r"^admin/", include(admin.site.urls)),
-    url(r"^config/", include("config.urls")),
-    url(r"^releases/", include("releases.urls")),
+    path("", "releases.views.http_home"),
+    path("admin/", include(admin.site.urls)),
+    path("config/", include("config.urls")),
+    path("releases/", include("releases.urls")),
 ]
