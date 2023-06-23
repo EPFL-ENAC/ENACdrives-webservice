@@ -10,3 +10,38 @@ End-user software can be downloaded from https://go.epfl.ch/KB0016347
 Settings administration page is located here : http://enacdrives.epfl.ch/admin/config/config/
 
 New releases are to be uploaded here in order to be accessible to the users : http://enacdrives.epfl.ch/releases/admin
+
+## Run it
+
+1. Set mandatory setup into the 2 following files (replace values with your own):
+
+```bash
+cat << EOF > secrets.env
+MYSQL_ROOT_PASSWORD="rootP4ssw0rd"
+MYSQL_DATABASE="enacdrives_db"
+MYSQL_USER="enacdrives_user"
+MYSQL_PASSWORD="userP4ssw0rd"
+EOF
+
+cat << EOF > .secrets.json
+{
+    "DATABASES": {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "enacdrives_db",
+            "USER": "enacdrives_user",
+            "PASSWORD": "userP4ssw0rd",
+            "HOST": "127.0.0.1",
+            "PORT": "3306"
+        }
+    }
+}
+EOF
+```
+
+2. Run it
+
+```bash
+make dev_db
+make dev
+```
