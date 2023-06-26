@@ -25,6 +25,25 @@ EOF
 
 cat << EOF > .secrets.json
 {
+    "ADMINS": [
+        [
+            "Your Name",
+            "your.email@epfl.ch"
+        ]
+    ],
+    "EMAIL_HOST": "mail.epfl.ch",
+    "EMAIL_SUBJECT_PREFIX": "[ENACdrives on laptop] ",
+    "SERVER_EMAIL": "no-reply+ENACdrives-dev@epfl.ch",
+    "SECRET_KEY": "OneSecretStringRandomlyGenerated",
+    "DEBUG": true,
+    "ALLOWED_HOSTS": [
+        "localhost",
+        "127.0.0.1"
+    ],
+    "BASE_DIR": "/path/to/ENACdrives-webservice",
+    "APACHE_PRIVATE_DIR": "/path/to/ENACdrives-webservice/private",
+    "FILE_UPLOAD_TEMP_DIR": "/path/to/ENACdrives-webservice/upload",
+    "STATIC_ROOT": "/path/to/ENACdrives-webservice/static",
     "DATABASES": {
         "default": {
             "ENGINE": "django.db.backends.mysql",
