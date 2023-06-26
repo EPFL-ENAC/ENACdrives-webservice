@@ -8,4 +8,5 @@ dev_db:
 
 dev:
 	poetry run enacdrivesweb/manage.py migrate
+	poetry run enacdrivesweb/manage.py collectstatic --noinput
 	poetry run enacdrivesweb/manage.py runserver
