@@ -1,12 +1,5 @@
-import os
 import re
-import json
 import ldap3
-
-# import pprint
-# import logging
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class UserNotFoundException(Exception):
@@ -20,9 +13,11 @@ class Ldap:
 
     def __init__(self):
         self.server_name = "ldap.epfl.ch"
-        self.scope = ldap3.SEARCH_SCOPE_WHOLE_SUBTREE
-        self.s = ldap3.Server(self.server_name)
-        self.c = ldap3.Connection(self.s)
+        self.server = ldap3.Server(self.server_name)
+        self.conn = ldap3.Connection(
+            self.server, client_strategy=ldap3.SAFE_SYNC, auto_bind=True
+        )
+        self.scope = "SUBTREE"
 
     def read_ldap(self, l_filter, l_attrs, base_dn="o=epfl,c=ch"):
         """
@@ -31,27 +26,23 @@ class Ldap:
             + 1st is main accreditation
             + other accreditations come after, unsorted
         """
-        with self.c:
-            if not self.c.bound:
-                raise Exception("Could not bind to {}".format(self.server_name))
-            self.c.search(
-                search_base=base_dn,
-                search_filter=l_filter,
-                search_scope=self.scope,
-                attributes=l_attrs,
-            )
+        if not self.conn.bound:
+            raise Exception("Could not bind to {}".format(self.server_name))
+        _, _, response, _ = self.conn.search(
+            search_base=base_dn,
+            search_filter=l_filter,
+            search_scope=self.scope,
+            attributes=l_attrs,
+        )
 
-            if self.c.response is None:
-                return []
+        if response is None:
+            return []
 
-            results = self.c.response
-
-        # results = [e["attributes"] for e in self.c.response]
         # Return main accreditation first.
         # + main's uid attribute has 2 values : "username", "username@unit"
         # + other's uid attribute has 1 value : "username@unit"
         return sorted(
-            results, key=lambda e: len(e["attributes"].get("uid", [])), reverse=True
+            response, key=lambda e: len(e["attributes"].get("uid", [])), reverse=True
         )
 
 
@@ -71,7 +62,6 @@ def get_user_settings(username):
                 "ldap_groups": [],
             }
     """
-    # debug_logger = logging.getLogger("debug")
     l = Ldap()
     user_settings = {
         "username": username,
@@ -130,5 +120,4 @@ def get_user_settings(username):
     )
     user_settings["ldap_groups"] = sorted(list(ldap_groups))
 
-    # debug_logger.debug("get_user_settings({}) :\n{}".format(username, pprint.pformat(user_settings)))
     return user_settings
