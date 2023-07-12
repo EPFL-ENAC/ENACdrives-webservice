@@ -69,6 +69,10 @@ EOF
 ```bash
 make dev_db
 
+# if starting from scratch : feed the database
+# some dump must be dump in `data/db_YYYY-MM-DD.yaml`
+make dev_feed_db
+
 # no authentification
 make dev
 

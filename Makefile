@@ -1,10 +1,16 @@
-.PHONY: shell dev_db dev
+.PHONY: shell dev_db dev_feed_db dev
 
 shell:
 	poetry run python enacdrivesweb/manage.py shell
 
 dev_db:
 	docker compose up db adminer -d
+
+dev_feed_db:
+	poetry run enacdrivesweb/manage.py migrate
+	@latest_dump_file=$$(ls data/db_*.yaml 2>/dev/null | sort -r | head -n 1) && \
+	echo "Going to load $$latest_dump_file" && \
+	poetry run enacdrivesweb/manage.py loaddata $$latest_dump_file
 
 dev:
 	poetry run enacdrivesweb/manage.py migrate
