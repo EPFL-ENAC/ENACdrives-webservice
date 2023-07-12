@@ -5,3 +5,5 @@ __pycache__
 
 # Ignore collectstatic generated files
 /static/
+
+/enacdrivesweb/config/admin_staff_list

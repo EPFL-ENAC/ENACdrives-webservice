@@ -56,11 +56,22 @@ cat << EOF > .secrets.json
     }
 }
 EOF
+
+cat << EOF > enacdrivesweb/config/admin_staff_list
+admin_username
+one_per_line
+third_admin_username
+EOF
 ```
 
 2. Run it
 
 ```bash
 make dev_db
+
+# no authentification
 make dev
+
+# with an authentificated user
+REMOTE_USER="username" make dev
 ```

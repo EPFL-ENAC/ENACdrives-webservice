@@ -9,4 +9,5 @@ dev_db:
 dev:
 	poetry run enacdrivesweb/manage.py migrate
 	poetry run enacdrivesweb/manage.py collectstatic --noinput
+	poetry run enacdrivesweb/manage.py admin_staff_setup < enacdrivesweb/config/admin_staff_list
 	poetry run enacdrivesweb/manage.py runserver
