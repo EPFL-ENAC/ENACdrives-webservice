@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 
 from .models import User, EpflUnit, LdapGroup, Config
 
@@ -33,49 +34,37 @@ class ConfigAdmin(admin.ModelAdmin):
     list_display_links = ("name", "get_data")
     ordering = ("rank",)
 
-    @admin.display(
-        description="Users"
-    )
+    @admin.display(description="Users")
     def get_users(self, obj):
         if obj.category == Config.CAT_USER:
             html = "<span>{}</span>"
         else:
             html = "<span class='field-off red'>{}</span>"
-        return html.format(", ".join([u.name for u in obj.users.all()]))
+        return mark_safe(html.format(", ".join([u.name for u in obj.users.all()])))
 
-
-    @admin.display(
-        description="EPFL Units"
-    )
+    @admin.display(description="EPFL Units")
     def get_epfl_units(self, obj):
         if obj.category == Config.CAT_EPFL_UNIT:
             html = "<span>{}</span>"
         else:
             html = "<span class='field-off red'>{}</span>"
-        return html.format(", ".join([g.name for g in obj.epfl_units.all()]))
+        return mark_safe(html.format(", ".join([g.name for g in obj.epfl_units.all()])))
 
-
-    @admin.display(
-        description="Ldap Groups"
-    )
+    @admin.display(description="Ldap Groups")
     def get_ldap_groups(self, obj):
         if obj.category == Config.CAT_LDAP_GROUP:
             html = "<span>{}</span>"
         else:
             html = "<span class='field-off red'>{}</span>"
-        return html.format(", ".join([g.name for g in obj.ldap_groups.all()]))
+        return mark_safe(
+            html.format(", ".join([g.name for g in obj.ldap_groups.all()]))
+        )
 
-
-    @admin.display(
-        description="Data"
-    )
+    @admin.display(description="Data")
     def get_data(self, obj):
-        return obj.data.replace("\n", "<br/>")
+        return mark_safe(obj.data.replace("\n", "<br/>"))
 
-
-    @admin.display(
-        description="Client Filter"
-    )
+    @admin.display(description="Client Filter")
     def get_client_filter(self, obj):
         the_list = []
         html = "<span>{}</span>"
@@ -92,8 +81,7 @@ class ConfigAdmin(admin.ModelAdmin):
         if len(the_list) == 0:
             html = "<span class='field-off'>{}</span>"
             the_list.append("None")
-        return html.format(" and <br>".join(the_list))
-
+        return mark_safe(html.format(" and <br>".join(the_list)))
 
     def short(self, string, max_length):
         if len(string) > max_length:

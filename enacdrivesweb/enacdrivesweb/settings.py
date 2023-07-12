@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 from dynaconf import settings as dyna_settings
 
@@ -131,6 +131,10 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+APACHE_PRIVATE_DIR = BASE_DIR / "private"
+FILE_UPLOAD_TEMP_DIR = BASE_DIR / "upload"
+STATIC_ROOT = BASE_DIR / "static"
 
 for key, value in dyna_settings.items():
     globals()[key] = value

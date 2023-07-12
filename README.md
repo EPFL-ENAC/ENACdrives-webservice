@@ -40,10 +40,6 @@ cat << EOF > .secrets.json
         "localhost",
         "127.0.0.1"
     ],
-    "BASE_DIR": "/path/to/ENACdrives-webservice",
-    "APACHE_PRIVATE_DIR": "/path/to/ENACdrives-webservice/private",
-    "FILE_UPLOAD_TEMP_DIR": "/path/to/ENACdrives-webservice/upload",
-    "STATIC_ROOT": "/path/to/ENACdrives-webservice/static",
     "DATABASES": {
         "default": {
             "ENGINE": "django.db.backends.mysql",

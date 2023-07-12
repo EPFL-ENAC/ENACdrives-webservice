@@ -1,6 +1,23 @@
-version: '3.1'
+# Apache -> SSL + Tequila + reverse proxy
+# uvicorn -> Django
 
+version: '3.1'
 services:
+  apache2:
+    build: apache-tequila
+    volumes:
+      - ./static:/app/static
+      - django-installers:/app/installers
+    ports:
+      - 80:80
+      - 443:443
+
+  gunicorn:
+    build: .
+    volumes:
+      - django-installers:/app/installers
+    ports:
+      - 8000:8000
 
   db:
     image: mysql
@@ -20,4 +37,6 @@ services:
 
 volumes:
   mysql:
+    driver: local
+  django-installers:
     driver: local
