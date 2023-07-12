@@ -75,3 +75,11 @@ make dev
 # with an authentificated user
 REMOTE_USER="username" make dev
 ```
+
+3. Local testing
+
+```bash
+http "http://127.0.0.1:8000/config/validate_username?username=username"
+http "http://127.0.0.1:8000/config/get?username=username"
+http "http://127.0.0.1:8000/config/ldap_settings?username=username"
+```
