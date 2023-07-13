@@ -12,7 +12,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context_processors import csrf
 from django.http import HttpResponse, Http404, HttpResponseForbidden
 
-from enacdrivesweb import app_settings
+from enacdrivesweb import settings
 from releases import models as mo
 from releases import utility as ut
 
@@ -85,7 +85,7 @@ def do_upload(request):
     storage_name = "{:04}-{:02}-{:02}-{:02}{:02}{:02}-{}".format(
         now.year, now.month, now.day, now.hour, now.minute, now.second, filename
     )
-    dest_path = os.path.join(app_settings.APACHE_PRIVATE_DIR, storage_name)
+    dest_path = os.path.join(settings.APACHE_PRIVATE_DIR, storage_name)
     try:
         # Uploaded file is big -> TemporaryUploadedFile
         src_path = uploaded_file.temporary_file_path()
@@ -159,7 +159,7 @@ def do_download(request):
     response = HttpResponse(content_type="application/force-download")
     response["Content-Disposition"] = "attachment; filename={}".format(inst.file_name)
     response["X-Sendfile"] = os.path.join(
-        app_settings.APACHE_PRIVATE_DIR, inst.storage_name
+        settings.APACHE_PRIVATE_DIR, inst.storage_name
     )
     # It"s usually a good idea to set the "Content-Length" header too.
     # You can also set any other required headers: Cache-Control, etc.
