@@ -5,7 +5,6 @@ import logging
 import datetime
 
 
-from django.template import RequestContext
 from django.urls import reverse
 from django.template.defaulttags import register
 from django.shortcuts import render, redirect, get_object_or_404
@@ -51,7 +50,7 @@ def http_admin(request):
 
     params.update(csrf(request))
     debug_logger.debug("params: {}".format(params))
-    return render(request, "admin.html", params, RequestContext(request))
+    return render(request, "admin.html", params)
 
 
 def do_upload(request):
