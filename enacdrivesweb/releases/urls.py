@@ -4,8 +4,8 @@ import releases.views
 urlpatterns = [
     path("", releases.views.http_home, name="http_home"),
     path("admin/", releases.views.http_admin, name="http_admin"),
-    path("upload", releases.views.do_upload, name="do_upload"),
-    path("enable", releases.views.do_enable, name="do_enable"),
+    path("admin/upload", releases.views.do_upload, name="do_upload"),
+    path("admin/enable", releases.views.do_enable, name="do_enable"),
     path("download", releases.views.do_download, name="do_download"),
     path(
         "api/latest_release_number",
