@@ -1,4 +1,4 @@
-.PHONY: shell dev_db dev_feed_db dev run
+.PHONY: shell dev_db dev_feed_db dev run container_entrypoint
 
 shell:
 	poetry run python enacdrivesweb/manage.py shell
@@ -19,5 +19,10 @@ dev:
 	poetry run enacdrivesweb/manage.py runserver
 
 run:
-	poetry run enacdrivesweb/manage.py collectstatic --noinput
 	docker compose up -d db apache2 gunicorn
+
+container_entrypoint:
+	/root/.local/bin/poetry run enacdrivesweb/manage.py migrate
+	/root/.local/bin/poetry run enacdrivesweb/manage.py collectstatic --noinput
+	/root/.local/bin/poetry run enacdrivesweb/manage.py admin_staff_setup < enacdrivesweb/config/admin_staff_list
+	/root/.local/bin/poetry run enacdrivesweb/manage.py runserver 0.0.0.0:8000

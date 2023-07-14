@@ -4,18 +4,18 @@
 version: '3.1'
 services:
   apache2:
-    build: apache-tequila
+    build: apache2
     volumes:
-      - ./static:/app/static
-      - django-installers:/app/installers
+      - static:/usr/local/apache2/htdocs/static:ro
+      - installers:/usr/local/apache2/htdocs/installers:ro
     ports:
       - 80:80
-      - 443:443
 
   gunicorn:
     build: .
     volumes:
-      - django-installers:/app/installers
+      - static:/app/static
+      - installers:/app/installers
     ports:
       - 8000:8000
 
@@ -38,5 +38,7 @@ services:
 volumes:
   mysql:
     driver: local
-  django-installers:
+  static:
+    driver: local
+  installers:
     driver: local
