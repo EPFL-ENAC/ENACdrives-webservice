@@ -1,7 +1,6 @@
 import os
 import json
 import shutil
-import logging
 import datetime
 
 
@@ -78,7 +77,7 @@ def do_upload(request):
     storage_name = "{:04}-{:02}-{:02}-{:02}{:02}{:02}-{}".format(
         now.year, now.month, now.day, now.hour, now.minute, now.second, filename
     )
-    dest_path = os.path.join(settings.APACHE_PRIVATE_DIR, storage_name)
+    dest_path = os.path.join(settings.INSTALLERS_DIR, storage_name)
     try:
         # Uploaded file is big -> TemporaryUploadedFile
         src_path = uploaded_file.temporary_file_path()
@@ -145,13 +144,16 @@ def do_download(request):
         answer = "This OS has no release."
         return HttpResponse(answer, content_type="text/plain; charset=utf-8")
 
-    response = HttpResponse(content_type="application/force-download")
-    response["Content-Disposition"] = "attachment; filename={}".format(inst.file_name)
-    response["X-Sendfile"] = os.path.join(
-        settings.APACHE_PRIVATE_DIR, inst.storage_name
-    )
-    # It"s usually a good idea to set the "Content-Length" header too.
-    # You can also set any other required headers: Cache-Control, etc.
+    # Open the file in binary mode to read its contents
+    file_path = os.path.join(settings.INSTALLERS_DIR, inst.storage_name)
+    filename = inst.file_name
+    with open(file_path, "rb") as f:
+        file_content = f.read()
+
+    # Create the HTTP response with appropriate headers
+    response = HttpResponse(file_content, content_type="application/octet-stream")
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+
     return response
 
 

@@ -138,7 +138,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
-APACHE_PRIVATE_DIR = BASE_DIR / "private"
+INSTALLERS_DIR = BASE_DIR / "installers"
 FILE_UPLOAD_TEMP_DIR = BASE_DIR / "upload"
 STATIC_ROOT = BASE_DIR / "static"
 

@@ -28,7 +28,6 @@ services:
     build: apache2
     volumes:
       - static:/app/static:ro
-      - installers:/app/installers:ro
     labels:
       - "traefik.http.routers.enac_cd_app.tls=true"
       - "traefik.http.routers.enac_cd_app.rule=PathPrefix(`/`)"
