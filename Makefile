@@ -1,3 +1,6 @@
+UID := $(shell id -u)
+GID := $(shell id -g)
+
 .PHONY: shell dev_db dev_feed_db dev run container_entrypoint
 
 shell:
@@ -19,10 +22,13 @@ dev:
 	poetry run enacdrivesweb/manage.py runserver
 
 run:
-	docker compose up --build -d db apache2 gunicorn
+	docker compose up --build -d db traefik-reverse-proxy apache2 gunicorn
 
 container_entrypoint:
 	/root/.local/bin/poetry run enacdrivesweb/manage.py migrate
 	/root/.local/bin/poetry run enacdrivesweb/manage.py collectstatic --noinput
 	/root/.local/bin/poetry run enacdrivesweb/manage.py admin_staff_setup < enacdrivesweb/config/admin_staff_list
 	cd enacdrivesweb && /root/.local/bin/poetry run gunicorn --bind 0.0.0.0:8000 enacdrivesweb.wsgi
+
+generate-selfsigned-cert:
+	cd cert && OWNER="${UID}.${GID}" docker compose up --remove-orphans

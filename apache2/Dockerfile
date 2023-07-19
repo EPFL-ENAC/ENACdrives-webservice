@@ -16,3 +16,5 @@ RUN mkdir /var/tequila \
     && chown www-data: /var/tequila \
     && mkdir -p /var/log/apache2 \
     && chown www-data: /var/log/apache2
+
+EXPOSE 80
