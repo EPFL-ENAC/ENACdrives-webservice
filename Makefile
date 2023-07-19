@@ -4,7 +4,7 @@ shell:
 	poetry run python enacdrivesweb/manage.py shell
 
 dev_db:
-	docker compose up db adminer -d
+	docker compose up --build db adminer -d
 
 dev_feed_db:
 	poetry run enacdrivesweb/manage.py migrate
@@ -19,10 +19,10 @@ dev:
 	poetry run enacdrivesweb/manage.py runserver
 
 run:
-	docker compose up -d db apache2 gunicorn
+	docker compose up --build -d db apache2 gunicorn
 
 container_entrypoint:
 	/root/.local/bin/poetry run enacdrivesweb/manage.py migrate
 	/root/.local/bin/poetry run enacdrivesweb/manage.py collectstatic --noinput
 	/root/.local/bin/poetry run enacdrivesweb/manage.py admin_staff_setup < enacdrivesweb/config/admin_staff_list
-	/root/.local/bin/poetry run enacdrivesweb/manage.py runserver 0.0.0.0:8000
+	cd enacdrivesweb && /root/.local/bin/poetry run gunicorn --bind 0.0.0.0:8000 enacdrivesweb.wsgi

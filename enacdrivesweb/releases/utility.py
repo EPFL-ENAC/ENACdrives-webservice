@@ -67,3 +67,9 @@ def parse_uploaded_file(filename):
         raise Exception("Unrecognized release number in {}".format(filename))
 
     return answer
+
+
+def get_username(request):
+    if "HTTP_X_CUSTOM_REMOTE_USER" in request.META:
+        return request.META["HTTP_X_CUSTOM_REMOTE_USER"]
+    return None

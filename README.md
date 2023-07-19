@@ -40,6 +40,10 @@ cat << EOF > .secrets.json
         "localhost",
         "127.0.0.1"
     ],
+    "CSRF_TRUSTED_ORIGINS": [
+        "http://localhost",
+        "http://127.0.0.1"
+    ],
     "DATABASES": {
         "default": {
             "ENGINE": "django.db.backends.mysql",
@@ -73,7 +77,7 @@ make dev_feed_db
 make dev
 
 # with an authentificated user
-REMOTE_USER="username" make dev
+HTTP_X_CUSTOM_REMOTE_USER="username" make dev
 ```
 
 3. Local testing

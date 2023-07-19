@@ -23,12 +23,10 @@ def http_home(request):
 def http_admin(request):
     if request.method != "GET":
         raise Http404
-    try:
-        username = request.META["REMOTE_USER"]
-    except KeyError:
-        return HttpResponseForbidden()
 
-    debug_logger = logging.getLogger("debug")
+    username = ut.get_username(request)
+    if username is None:
+        return HttpResponseForbidden()
 
     installers = {}
     current_installer_id = {}
@@ -49,7 +47,6 @@ def http_admin(request):
     }
 
     params.update(csrf(request))
-    debug_logger.debug("params: {}".format(params))
     return render(request, "admin.html", params)
 
 
@@ -59,18 +56,15 @@ def do_upload(request):
 
     if request.method != "POST":
         raise Http404
-    try:
-        username = request.META["REMOTE_USER"]
-    except KeyError:
-        return HttpResponseForbidden()
 
-    debug_logger = logging.getLogger("debug")
+    username = ut.get_username(request)
+    if username is None:
+        return HttpResponseForbidden()
 
     try:
         uploaded_file = request.FILES["file"]
         filename = uploaded_file.name
         file_attributes = ut.parse_uploaded_file(filename)
-        debug_logger.debug("file_attributes : {}".format(file_attributes))
     except Exception as e:
         response = {
             "status": "error",
@@ -113,16 +107,12 @@ def do_upload(request):
 
 
 def do_enable(request):
-    debug_logger = logging.getLogger("debug")
-    debug_logger.debug("AA")
     if request.method != "POST":
         raise Http404
-    debug_logger.debug("AB")
-    try:
-        username = request.META["REMOTE_USER"]
-    except KeyError:
+
+    username = ut.get_username(request)
+    if username is None:
         return HttpResponseForbidden()
-    debug_logger.debug("AC")
 
     arch_id = ut.validate_input(request.POST.get, "arch", "int")
     installer_id = ut.validate_input(request.POST.get, "inst", "int")

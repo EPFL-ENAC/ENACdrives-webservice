@@ -1,13 +1,13 @@
 # Apache -> SSL + Tequila + reverse proxy
 # uvicorn -> Django
 
-version: '3.1'
+version: "3.1"
 services:
   apache2:
     build: apache2
     volumes:
-      - static:/usr/local/apache2/htdocs/static:ro
-      - installers:/usr/local/apache2/htdocs/installers:ro
+      - static:/app/static:ro
+      - installers:/app/installers:ro
     ports:
       - 80:80
 
@@ -16,6 +16,8 @@ services:
     volumes:
       - static:/app/static
       - installers:/app/installers
+    depends_on:
+      - db
     ports:
       - 8000:8000
 
