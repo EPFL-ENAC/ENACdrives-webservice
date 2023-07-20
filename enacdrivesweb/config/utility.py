@@ -1,6 +1,10 @@
+import os
 import re
-import logging
+import subprocess
 from django.utils.encoding import smart_str
+
+from config import models as mo
+from enacdrivesweb import settings
 
 
 def validate_input(data_source, data_type):
@@ -239,3 +243,108 @@ def remove_all_mount(original_config):
         if current_section != "cifs_mount":
             config_given += line + "\n"
     return config_given
+
+
+def check_config():
+    CIFS_UNIT_CONFIG = (
+        {
+            "server": "enac1files.epfl.ch",
+            "config name": "NAS3 Files",
+            "shares_to_ignore": (
+                r".*\$$",  # all shares finished by a "$"
+                r"academic-alpole",
+                r"antfr-ge",
+                r"biomining",
+                r"camipro-2018",
+                r"digiwalls-ibois-eesd",
+                r"ecombine",
+                r"enac-prom-acad",
+                r"geome",
+                r"gestion-unites-enac",
+                r"icarus",
+                r"infra-sculpture",
+                r"ivea",
+                r"lablysi",
+                r"phlebicite",
+                r"proj-.*$",  # all proj- shares
+                r"s_pine",
+                r"sar-web",
+                r"si_topsolid_debug_files",
+                r"technologie_du_bati_2",
+                r"technologie_du_bati_4",
+                r"uhna",
+                r"vaertical",
+                r"wanhabitats",
+            ),
+            "units_to_ignore": (),
+        },
+        {
+            "server": "enac1arch.epfl.ch",
+            "config name": "NAS3 Arch",
+            "shares_to_ignore": (
+                r".*\$$",  # all shares finished by a "$"
+                r"enac-webcom",
+                r"geome",
+                r"oldlabs",
+                r"sar-winprofiles",
+                r"sgc-winprofiles",
+                r"ssie-salles",
+            ),
+            "units_to_ignore": (),
+        },
+        {
+            "server": "enac1raw.epfl.ch",
+            "config name": "NAS3 Raw",
+            "shares_to_ignore": (r".*\$$",),  # all shares finished by a "$"
+            "units_to_ignore": (),
+        },
+        {
+            "server": "enac2raw.epfl.ch",
+            "config name": "NAS3 Raw2",
+            "shares_to_ignore": (r".*\$$",),  # all shares finished by a "$"
+            "units_to_ignore": (),
+        },
+    )
+    CREDENTIALS_FILE = os.path.join(settings.BASE_DIR, "enacmoni.cred")
+
+    def list_smb_shares(cfg):
+        shares = []
+        cmd = ["smbclient", "-A", CREDENTIALS_FILE, "-L", cfg["server"], "-m", "SMB3"]
+        output = subprocess.check_output(cmd, stderr=subprocess.DEVNULL).decode()
+
+        # parse output
+        for line in output.split("\n"):
+            match = re.match(r"\s*(\S+)\s+Disk\s.*$", line)
+            if match:
+                valid_share = True
+                share = match.group(1).lower()
+                for filter_out in cfg["shares_to_ignore"]:
+                    if re.match(filter_out, share):
+                        valid_share = False
+                if valid_share:
+                    shares.append(share)
+
+        return set(shares)
+
+    status = 0
+    output = ""
+    for cfg in CIFS_UNIT_CONFIG:
+        output += f"Checking {cfg['config name']}: \n"
+        shares = list_smb_shares(cfg)
+        cfg["shares"] = shares
+        c = mo.Config.objects.get(name=cfg["config name"])
+        c_units = set([u.name.lower() for u in c.epfl_units.all()])
+
+        missing = shares - c_units
+        too_much = c_units - shares
+        if len(missing) != 0:
+            output += f"Error. Missing units: {list(missing)}\n"
+            status = 2
+        if len(too_much) != 0:
+            output += f"Error. Too much units: {list(too_much)}\n"
+            status = 2
+        if len(missing) + len(too_much) == 0:
+            output += "Units for this filer are correctly configured.\n"
+
+    output += f"exit with {status=}\n"
+    return (status, output)

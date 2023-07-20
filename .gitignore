@@ -2,6 +2,7 @@ __pycache__
 
 # Ignore dynaconf secret files
 .secrets.*
+enacmoni.cred
 
 # Ignore collectstatic generated files
 /static/

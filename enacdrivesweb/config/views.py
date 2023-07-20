@@ -196,3 +196,15 @@ def http_ldap_settings(request):
         pass
 
     return HttpResponse(output + "\n", content_type="text/plain; charset=utf-8")
+
+
+def http_check_config(request):
+    if request.method != "GET":
+        raise Http404
+
+    status, output = ut.check_config()
+    if status == 0:
+        output = f"OK\n{output}"
+    else:
+        output = f"ERROR\n{output}"
+    return HttpResponse(output, content_type="text/plain; charset=utf-8")

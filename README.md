@@ -62,6 +62,12 @@ admin_username
 one_per_line
 third_admin_username
 EOF
+
+cat << EOF > enacmoni.cred
+username = enacmoni
+password = theSecretPassword
+domain   = INTRANET
+EOF
 ```
 
 2. Run it
