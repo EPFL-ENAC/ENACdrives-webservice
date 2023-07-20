@@ -50,7 +50,7 @@ def http_admin(request):
 
 
 def do_upload(request):
-    # Receive uploaded file and move it to /var/www/enacdrives.epfl.ch/private_html/
+    # Receive uploaded file and move it to INSTALLERS_DIR
     # Create an mo.Installer entry, disabled by default.
 
     if request.method != "POST":
