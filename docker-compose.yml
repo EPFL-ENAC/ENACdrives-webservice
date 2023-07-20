@@ -29,9 +29,9 @@ services:
     volumes:
       - static:/app/static:ro
     labels:
-      - "traefik.http.routers.enac_cd_app.tls=true"
-      - "traefik.http.routers.enac_cd_app.rule=PathPrefix(`/`)"
-      - "traefik.http.services.enac_cd_app.loadbalancer.server.port=80"
+      - "traefik.http.routers.enacdrives_apache2.tls=true"
+      - "traefik.http.routers.enacdrives_apache2.rule=PathPrefix(`/`)"
+      - "traefik.http.services.enacdrives_apache2.loadbalancer.server.port=80"
 
   gunicorn:
     build: .
