@@ -16,7 +16,7 @@ New releases are to be uploaded here in order to be accessible to the users : ht
 1. Set mandatory setup into the 2 following files (replace values with your own):
 
 ```bash
-cat << EOF > secrets.env
+cat << EOF > .secrets.env
 MYSQL_ROOT_PASSWORD="rootP4ssw0rd"
 MYSQL_DATABASE="enacdrives_db"
 MYSQL_USER="enacdrives_user"
@@ -79,17 +79,33 @@ make dev_db
 # some dump must be dump in `data/db_YYYY-MM-DD.yaml`
 make dev_feed_db
 
-# no authentification
+# run as dev, no authentification
 make dev
 
-# with an authentificated user
+# run as dev, with an authentificated user
 HTTP_X_CUSTOM_REMOTE_USER="username" make dev
+
+# run all dockerized (authentication will be Tequila)
+make run
 ```
 
 3. Local testing
 
 ```bash
-http "http://127.0.0.1:8000/config/validate_username?username=username"
-http "http://127.0.0.1:8000/config/get?username=username"
-http "http://127.0.0.1:8000/config/ldap_settings?username=username"
+http "https://localhost/config/validate_username?username=username"
+http "https://localhost/config/get?username=username"
+http "https://localhost/config/ldap_settings?username=username"
 ```
+
+3.1 manage releases
+
+https://localhost/releases/admin
+https://localhost/releases/download?os=Windows
+https://localhost/releases/api/latest_release_number?os=Windows
+
+3.2 manage config
+
+https://localhost/admin/
+https://localhost/config/get?username=bancal
+https://localhost/config/validate_username?username=bancal
+https://localhost/config/ldap_settings?username=bancal
