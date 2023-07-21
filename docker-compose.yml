@@ -39,7 +39,8 @@ services:
       - static:/app/static
       - installers:/app/installers
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - 8000:8000
 
@@ -52,6 +53,11 @@ services:
       - 3306:3306
     volumes:
       - mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "db"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
 
   adminer:
     image: adminer
