@@ -1,3 +1,4 @@
+include .secrets.env
 UID := $(shell id -u)
 GID := $(shell id -g)
 
@@ -32,3 +33,6 @@ container_entrypoint:
 
 generate-selfsigned-cert:
 	cd cert && OWNER="${UID}.${GID}" docker compose up --remove-orphans
+
+backup-dump:
+	@docker-compose exec db sh -c 'exec mysqldump --all-databases -uroot -p"${MYSQL_ROOT_PASSWORD}"' > ${DEST_FOLDER}/all-databases.sql
