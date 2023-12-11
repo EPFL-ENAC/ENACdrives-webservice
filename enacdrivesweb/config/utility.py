@@ -257,6 +257,7 @@ def check_config():
                 r"biomining",
                 r"camipro-2018",
                 r"digiwalls-ibois-eesd",
+                r"dropim",
                 r"ecombine",
                 r"enac-prom-acad",
                 r"geome",
