@@ -273,6 +273,7 @@ def check_config():
                 r"si_topsolid_debug_files",
                 r"technologie_du_bati_2",
                 r"technologie_du_bati_4",
+                r"topo",
                 r"uhna",
                 r"vaertical",
                 r"wanhabitats",
