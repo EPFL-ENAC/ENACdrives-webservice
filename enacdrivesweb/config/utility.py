@@ -273,7 +273,6 @@ def check_config():
                 r"si_topsolid_debug_files",
                 r"technologie_du_bati_2",
                 r"technologie_du_bati_4",
-                r"topo",
                 r"uhna",
                 r"vaertical",
                 r"wanhabitats",
@@ -292,12 +291,6 @@ def check_config():
                 r"sgc-winprofiles",
                 r"ssie-salles",
             ),
-            "units_to_ignore": (),
-        },
-        {
-            "server": "enac1raw.epfl.ch",
-            "config name": "NAS3 Raw",
-            "shares_to_ignore": (r".*\$$",),  # all shares finished by a "$"
             "units_to_ignore": (),
         },
         {
