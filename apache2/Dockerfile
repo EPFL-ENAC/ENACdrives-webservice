@@ -1,20 +1,11 @@
 
 FROM httpd:2.4
 
-# Tequila
-RUN apt -qy update; \
-    apt -qy install wget build-essential ca-certificates \
-    apache2-dev libssl-dev libc-client-dev libkrb5-dev libpq-dev
+RUN apt-get -qy update \
+    && apt-get -qy install wget
 
-RUN cd / && wget https://tequila.epfl.ch/download/2.0/tequila-apache-C-2.0.17.tgz
-RUN cd / && tar zxvf tequila-apache-C-2.0.17.tgz
-RUN cd /tequila-2.0.17/Apache/C/ && make && apxs -c -i -DAPACHE2 -DUSESSL -lssl mod_tequila.c
-
-COPY httpd.conf /usr/local/apache2/conf/httpd.conf
-
-RUN mkdir /var/tequila \
-    && chown www-data: /var/tequila \
-    && mkdir -p /var/log/apache2 \
-    && chown www-data: /var/log/apache2
+RUN cd / \
+    && wget https://github.com/OpenIDC/mod_auth_openidc/releases/download/v2.4.16.8/libapache2-mod-auth-openidc_2.4.16.8-1.bookworm_amd64.deb \
+    && apt-get -qy install ./libapache2-mod-auth-openidc_2.4.16.8-1.bookworm_amd64.deb
 
 EXPOSE 80

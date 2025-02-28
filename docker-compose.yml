@@ -26,6 +26,8 @@ services:
   apache2:
     build: apache2
     volumes:
+      - ./apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./apache2/oidc.secret.conf:/usr/local/apache2/conf/oidc.secret.conf
       - static:/app/static:ro
     labels:
       - "traefik.http.routers.enacdrives_apache2.tls=true"
