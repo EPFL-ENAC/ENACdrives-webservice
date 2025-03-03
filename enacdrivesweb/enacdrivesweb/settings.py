@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "enacdrivesweb.middleware.FixForwardedHostMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -144,3 +145,5 @@ STATIC_ROOT = BASE_DIR / "static"
 
 for key, value in dyna_settings.items():
     globals()[key] = value
+
+USE_X_FORWARDED_HOST = True
