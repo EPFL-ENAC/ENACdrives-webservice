@@ -38,7 +38,8 @@ cat << EOF > .secrets.json
     "DEBUG": true,
     "ALLOWED_HOSTS": [
         "localhost",
-        "127.0.0.1"
+        "127.0.0.1",
+        "enacdrives.epfl.ch",
     ],
     "CSRF_TRUSTED_ORIGINS": [
         "http://localhost",
