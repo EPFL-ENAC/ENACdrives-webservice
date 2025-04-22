@@ -25,6 +25,7 @@ services:
 
   apache2:
     build: apache2
+    restart: unless-stopped
     volumes:
       - ./apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
       - ./apache2/oidc.secret.conf:/usr/local/apache2/conf/oidc.secret.conf
@@ -38,6 +39,7 @@ services:
 
   gunicorn:
     build: .
+    restart: unless-stopped
     volumes:
       - static:/app/static
       - installers:/app/installers
