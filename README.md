@@ -69,6 +69,10 @@ username = enacmoni
 password = theSecretPassword
 domain   = INTRANET
 EOF
+
+# Set OIDC secret from https://app-portal.epfl.ch/
+cp apache2/oidc.secret.conf.template apache2/oidc.secret.conf
+vim apache2/oidc.secret.conf
 ```
 
 2. Run it
