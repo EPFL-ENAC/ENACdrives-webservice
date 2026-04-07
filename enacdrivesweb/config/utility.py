@@ -287,6 +287,7 @@ def check_config():
                 r"enac-webcom",
                 r"geome",
                 r"oldlabs",
+                r"sar-salles",
                 r"sar-winprofiles",
                 r"sgc-winprofiles",
                 r"ssie-salles",
