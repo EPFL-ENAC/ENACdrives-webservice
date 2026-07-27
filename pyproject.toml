@@ -1,6 +1,7 @@
 [tool.poetry]
 name = "ENACdrives-webservice"
 version = "0.1.0"
+requires-poetry = ">=2.4.0"
 description = "ENACdrives webservice"
 authors = ["Samuel Bancal <Samuel.Bancal@epfl.ch>"]
 package-mode = false
