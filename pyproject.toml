@@ -8,7 +8,7 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
-django = "^4.2.22"
+django = "^5.2"
 ldap3 = "^2.9.1"
 mysqlclient = "^2.1.1"
 dynaconf = "^3.1.12"
