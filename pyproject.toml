@@ -7,7 +7,7 @@ authors = ["Samuel Bancal <Samuel.Bancal@epfl.ch>"]
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.12"
 django = "^5.2"
 ldap3 = "^2.9.1"
 mysqlclient = "^2.1.1"
